@@ -1,29 +1,39 @@
-from flask import Flask, render_template, request
-from clases import Empleado, Gerente
- 
-app = Flask(__name__)
- 
-# Ruta para el formulario de entrada de datos
-@app.route('/')
-def formulario():
-    return render_template('formulario.html')
- 
-# Ruta para procesar los datos del formulario
-@app.route('/calcular', methods=['POST'])
-def calcular():
-    nombre = request.form['nombre']
-    edad = int(request.form['edad'])
-    salario_base = float(request.form['salario_base'])
-    tipo_empleado = request.form['tipo_empleado']
- 
-    if tipo_empleado == 'gerente':
-        bono = float(request.form['bono'])
-        empleado = Gerente(nombre, edad, salario_base, bono)
-    else:
-        empleado = Empleado(nombre, edad, salario_base)
- 
-    salario_mensual = empleado.calcular_salario_mensual()
-    return render_template('resultado.html', nombre=nombre, salario=salario_mensual)
- 
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Salario</title>
+</head>
+<body>
+    <h1>Calculadora de Salario</h1>
+    <form action="/calcular" method="post">
+        <label for="nombre">Nombre:</label><br>
+        <input type="text" id="nombre" name="nombre"><br>
+        <label for="edad">Edad:</label><br>
+        <input type="number" id="edad" name="edad"><br>
+        <label for="salario_base">Salario Base:</label><br>
+        <input type="number" id="salario_base" name="salario_base"><br>
+        <label for="tipo_empleado">Tipo de Empleado:</label><br>
+        <select id="tipo_empleado" name="tipo_empleado">
+            <option value="empleado">Empleado</option>
+            <option value="gerente">Gerente</option>
+        </select><br>
+        <label for="bono">Bono (solo para gerentes):</label><br>
+        <input type="number" id="bono" name="bono" step="any" disabled><br>
+        <input type="submit" value="Calcular">
+    </form>
+    <script>
+        document.getElementById('tipo_empleado').addEventListener('change', function() {
+            var bonoInput = document.getElementById('bono');
+            if (this.value === 'gerente') {
+                bonoInput.disabled = false;
+            } else {
+                bonoInput.disabled = true;
+            }
+        });
+    </script>
+</body>
+</html>
+
+
