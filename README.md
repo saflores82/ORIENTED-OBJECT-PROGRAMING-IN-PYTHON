@@ -42,3 +42,24 @@ sudo pip3 install Flask
 5-Ejecuta tu aplicación Flask (en la raíz del proyecto)
 
 python3 app.py 
+
+# Oriented Object Programming in Python (Flask)
+
+## Pasos
+
+1. **Crear una EC2 en AWS**
+
+   - Crea la clave para enlazar al git en la EC2:
+
+     ```sh
+     ssh-keygen -t ed25519 -C "your_email@example.com"
+     ```
+
+   - **INTRO x 4**
+
+2. **Instalar git**
+
+   ```sh
+   sudo yum update -y
+   sudo yum install git -y
+   git --version
